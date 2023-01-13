@@ -1,10 +1,18 @@
 import express from "express";
-import { products } from "./data/products.js";
 import cors from "cors";
 import { config } from "./config/config.js";
 import { connectDB } from "./db/db.js";
 import colors from "colors";
+import { routerApi } from "./routes/index.js";
+import {
+  errorHandler,
+  boomErrorHandler,
+  logErrors,
+  odmErrorHandler,
+  notFound,
+} from "./middlewares/error.handler.js";
 
+// connection DB
 connectDB();
 
 const app = express();
@@ -20,21 +28,23 @@ const options = {
   },
 };
 
+// cors
 app.use(cors(options));
 
+//router
 app.get("/", (req, res) => {
   res.send("Api is running... ");
 });
+routerApi(app);
 
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
+//error handlers
+app.use(notFound);
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(odmErrorHandler);
+app.use(errorHandler);
 
-app.get("/api/products/:id", (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
-});
-
+//server connection
 const PORT = config.port;
 const connectedServer = app.listen(PORT, () => {
   console.log(

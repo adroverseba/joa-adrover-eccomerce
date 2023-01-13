@@ -1,18 +1,16 @@
-import { useState, useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
-import { productApi } from "../api/productApi";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../store/slices/product/thunks";
 import { Product } from "../components";
+import { Col, Row } from "react-bootstrap";
 
 export const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
+  const { products, error, isLoading } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await productApi.get("/api/products");
-      setProducts(data);
-    };
-    fetchProducts();
-  }, []);
+    dispatch(getProducts());
+  }, [dispatch]);
 
   return (
     <>
