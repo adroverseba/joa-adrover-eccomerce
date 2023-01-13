@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-import { productApi } from "../api/productsApi";
+import { productApi } from "../api/productApi";
 import { Product } from "../components";
 
 export const HomeScreen = () => {

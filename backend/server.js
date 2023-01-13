@@ -1,6 +1,12 @@
-const express = require("express");
-const products = require("./data/products");
-const cors = require("cors");
+import express from "express";
+import { products } from "./data/products.js";
+import cors from "cors";
+import { config } from "./config/config.js";
+import { connectDB } from "./db/db.js";
+import colors from "colors";
+
+connectDB();
+
 const app = express();
 
 const whitelist = ["http://localhost:5173", "http://localhost:3000"];
@@ -29,7 +35,13 @@ app.get("/api/products/:id", (req, res) => {
   res.json(product);
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`);
+const PORT = config.port;
+const connectedServer = app.listen(PORT, () => {
+  console.log(
+    `Server running in ${config.env} mode on port: ${PORT}`.yellow.bold
+  );
+});
+
+connectedServer.on("error", (err) => {
+  console.log(`ocurrio un error en el servidor: ${err.message}`);
 });

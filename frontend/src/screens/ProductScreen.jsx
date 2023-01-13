@@ -1,12 +1,22 @@
+import { useState, useEffect } from "react";
 import { Button, Col, Image, ListGroup, Row, Card } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import { productApi } from "../api/productApi";
 import { Rating } from "../components";
-import products from "../products";
 
 export const ProductScreen = () => {
+  const [product, setProduct] = useState({});
+
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = products.find((p) => p._id === id);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await productApi.get(`/api/products/${id}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [id]);
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -43,7 +53,7 @@ export const ProductScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Price:</Col>
-                  <Col>{product.price}</Col>
+                  <Col>$ {product.price}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
