@@ -1,5 +1,8 @@
 import { productApi } from "../../../api/productApi";
 import {
+  productDetailsFail,
+  productDetailsRequest,
+  productDetailsSuccess,
   productListFail,
   productListRequest,
   productListSuccess,
@@ -15,6 +18,25 @@ export const getProducts = () => {
       console.log(error);
       dispatch(
         productListFail(
+          error.respose && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        )
+      );
+    }
+  };
+};
+
+export const getProductDetail = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(productDetailsRequest());
+      const { data } = await productApi.get(`/api/products/${id}`);
+      dispatch(productDetailsSuccess(data));
+    } catch (error) {
+      console.log(error);
+      dispatch(
+        productDetailsFail(
           error.respose && error.response.data.message
             ? error.response.data.message
             : error.message

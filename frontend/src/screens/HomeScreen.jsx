@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../store/slices/product/thunks";
-import { Product } from "../components";
+import { Loader, Message, Product } from "../components";
 import { Col, Row } from "react-bootstrap";
 
 export const HomeScreen = () => {
@@ -15,13 +15,19 @@ export const HomeScreen = () => {
   return (
     <>
       <h1>Latest Products</h1>
-      <Row>
-        {products.map((product) => (
-          <Col xs={12} md={6} lg={4} xl={3} key={`col-prod-${product._id}`}>
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Row>
+          {products.map((product) => (
+            <Col xs={12} md={6} lg={4} xl={3} key={`col-prod-${product._id}`}>
+              <Product product={product} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };

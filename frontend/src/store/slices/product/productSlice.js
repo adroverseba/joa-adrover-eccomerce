@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const productSlice = createSlice({
+export const productListSlice = createSlice({
   name: "product",
   initialState: {
     isLoading: false,
@@ -24,4 +24,32 @@ export const productSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { productListRequest, productListSuccess, productListFail } =
-  productSlice.actions;
+  productListSlice.actions;
+
+export const productDetailsSlice = createSlice({
+  name: "productDetails",
+  initialState: {
+    product: { reviews: [] },
+  },
+  reducers: {
+    productDetailsRequest: (state) => {
+      state.isLoading = true;
+      // state.product = { reviews: [] };
+    },
+    productDetailsSuccess: (state, action) => {
+      state.isLoading = false;
+      state.product = action.payload;
+    },
+    productDetailsFail: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
+// Action creators are generated for each case reducer function
+export const {
+  productDetailsRequest,
+  productDetailsSuccess,
+  productDetailsFail,
+} = productDetailsSlice.actions;
