@@ -5,7 +5,9 @@ import { Loader, Message, Product } from "../components";
 import { Col, Row } from "react-bootstrap";
 
 export const HomeScreen = () => {
-  const { products, error, isLoading } = useSelector((state) => state.products);
+  const { products, error, isLoading } = useSelector(
+    (state) => state.productList
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
