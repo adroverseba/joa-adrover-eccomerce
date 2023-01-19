@@ -31,6 +31,9 @@ const options = {
 // cors
 app.use(cors(options));
 
+//body parser - colocar luego de los cors
+app.use(express.json());
+
 //router
 app.get("/", (req, res) => {
   res.send("Api is running... ");

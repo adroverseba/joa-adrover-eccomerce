@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-import { config } from "./config/config.js";
 import colors from "colors";
 import { users, products } from "./data/index.js";
 import { User, Order, Product } from "./db/models/index.js";

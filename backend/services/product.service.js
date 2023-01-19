@@ -2,7 +2,6 @@ import boom from "@hapi/boom";
 import { Product } from "../db/models/index.js";
 
 class ProductService {
-  constructor() {}
 
   async find() {
     const products = await Product.find();

@@ -17,7 +17,7 @@ export const Product = ({ product }) => {
           <Rating
             value={product.rating}
             text={`of ${product.numReviews} reviews`}
-            color={"red"}
+            // color={"red"}
           />
         </Card.Subtitle>
 

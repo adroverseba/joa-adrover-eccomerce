@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { config } from "../config/config.js";
+import mongoose from 'mongoose';
+import { config } from '../config/config.js';
 
 //handle incorrect routes
 export function notFound(req, res, next) {
@@ -30,12 +30,12 @@ export function odmErrorHandler(err, req, res, next) {
     });
   } else if (err.code === 11000) {
     // manejar error de clave duplicada
-    res.status(409).send("Valor duplicado");
+    res.status(409).send('Valor duplicado');
   }
   next(err);
 }
 
-export function errorHandler(err, req, res, next) {
+export function errorHandler(err, req, res) {
   // console.log(err.kind);
   res.status(500).json({
     message: err.message,
